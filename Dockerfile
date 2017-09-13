@@ -12,9 +12,7 @@ RUN apt-get update -y && \
 RUN echo "deb https://packages.gitlab.com/runner/gitlab-ci-multi-runner/ubuntu/ `lsb_release -cs` main" > /etc/apt/sources.list.d/runner_gitlab-ci-multi-runner.list && \
     wget -q -O - https://packages.gitlab.com/gpg.key | apt-key add - && \
     apt-get update -y && \
-    apt-get install -y gitlab-ci-multi-runner && \
-    wget -q https://github.com/docker/machine/releases/download/v0.7.0/docker-machine-Linux-x86_64 -O /usr/bin/docker-machine && \
-    chmod +x /usr/bin/docker-machine && \
+    apt-get install -y gitlab-ci-multi-runner docker.io && \
     apt-get clean && \
     mkdir -p /etc/gitlab-runner/certs && \
     chmod -R 700 /etc/gitlab-runner && \
