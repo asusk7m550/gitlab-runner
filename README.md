@@ -10,7 +10,7 @@ The Docker image can run with the next command.
         --environment CI_SERVER_URL=http://gitlab.mydomain.com \
         --environment REGISTRATION_TOKEN=XXXXXXXXXX \
         --environment RUNNER_EXECUTOR=kubernetes \
-        -environment KUBERNETES_IMAGE=alpine \
+        --environment KUBERNETES_IMAGE=alpine \
         --environment KUBERNETES_NAMESPACE=gitlab \
         --volume=/etc/gitlab-runner:/etc/gitlab-runner
 
@@ -48,15 +48,29 @@ You should also be able to spawn a gitlab-runner on kubernetes with the followin
               value: "XXXXXXXXXX"
             - name: RUNNER_EXECUTOR
               value: "kubernetes"
+            - name: KUBERNETES_PRIVILEGED
+              value: "true"
             - name: KUBERNETES_IMAGE
-              value: "alpine"
+              value: "docker:latest"
             - name: KUBERNETES_NAMESPACE
               value: "gitlab"
+            - name: DOCKER_HOST
+              value: tcp://localhost:2375
+          - image: docker:1.12.6-dind
+            imagePullPolicy: Always
+            name: dind-daemon
+            securityContext:
+                privileged: true
+            volumeMounts:
+            - name: docker-graph-storage
+              mountPath: /var/lib/docker
           restartPolicy: Always
           volumes:
-          - hostPath:
+          - name: docker-graph-storage
+            emptyDir: {}
+          - name: cacerts
+            hostPath:
               path: /usr/share/ca-certificates/mozilla
-            name: cacerts
 
 ## Acknowledgements
 
