@@ -1,11 +1,11 @@
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 
-ADD https://github.com/Yelp/dumb-init/releases/download/v1.0.2/dumb-init_1.0.2_amd64 /usr/bin/dumb-init
+ADD https://github.com/Yelp/dumb-init/releases/download/v1.2.1/dumb-init_1.2.1_amd64 /usr/bin/dumb-init
 RUN chmod +x /usr/bin/dumb-init
 
 RUN apt-get update -y && \
     apt-get upgrade -y && \
-    apt-get install -y ca-certificates wget apt-transport-https vim nano && \
+    apt-get install -y ca-certificates wget apt-transport-https vim nano lsb-release && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
