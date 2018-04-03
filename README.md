@@ -38,7 +38,7 @@ You should also be able to spawn a gitlab-runner on kubernetes with the followin
             imagePullPolicy: Always
             name: gitlab-runner
             volumeMounts:
-            - mountPath: /etc/ssl/certs
+            - mountPath: /etc/gitlab-runner/certs
               name: cacerts
               readOnly: true
             env:
@@ -71,6 +71,8 @@ You should also be able to spawn a gitlab-runner on kubernetes with the followin
           - name: cacerts
             hostPath:
               path: /usr/share/ca-certificates/mozilla
+
+To use your own CA, add the CA file as ca.crt to the directory /usr/share/ca-certificates/mozilla on the workers.
 
 ## Acknowledgements
 
