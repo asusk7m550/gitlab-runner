@@ -21,5 +21,12 @@ fi
 # register this runner
 gitlab-ci-multi-runner register --non-interactive
 
+cat >> /etc/gitlab-runner/config.toml << EOF
+    [[runners.kubernetes.volumes.empty_dir]]
+      name = "certs"
+      mount_path = "/certs"
+      medium = "Memory"
+EOF
+
 # launch gitlab-ci-multi-runner passing all arguments
 exec gitlab-ci-multi-runner "$@"
